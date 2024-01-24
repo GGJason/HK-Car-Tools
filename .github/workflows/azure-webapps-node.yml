@@ -71,7 +71,7 @@ jobs:
         name: node-app
         
     - name: unzip all files
-      run: unzip -q next.zip next
+      run: unzip next.zip -d next -q
     - name: 'Deploy to Azure WebApp'
       id: deploy-to-webapp
       uses: azure/webapps-deploy@v2
