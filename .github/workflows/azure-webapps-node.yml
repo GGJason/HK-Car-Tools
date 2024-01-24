@@ -16,7 +16,7 @@
 # For more information on GitHub Actions for Azure: https://github.com/Azure/Actions
 # For more information on the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # For more samples to get started with GitHub Action workflows to deploy to Azure: https://github.com/Azure/actions-workflow-samples
-
+# ref: https://medium.com/@didikmulyadi/deploy-nextjs-13-to-azure-app-service-with-github-action-9027d7e93eb5
 on:
   push:
     branches: [ "main" ]
@@ -47,7 +47,8 @@ jobs:
         npm install
         npm run build --if-present
         npm run test --if-present
-
+    - name: zip all files
+      run: zip next.zip ./* .next -qr
     - name: Upload artifact for deployment job
       uses: actions/upload-artifact@v3
       with:
@@ -68,6 +69,9 @@ jobs:
       uses: actions/download-artifact@v3
       with:
         name: node-app
+        
+    - name: unzip all files
+      run: unzip next.zip next -q
 
     - name: 'Deploy to Azure WebApp'
       id: deploy-to-webapp
@@ -75,4 +79,4 @@ jobs:
       with:
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-        package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+        package: next
