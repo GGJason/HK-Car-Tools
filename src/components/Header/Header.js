@@ -1,6 +1,4 @@
 import Link from 'next/link';
-import { FaGithub } from 'react-icons/fa';
-
 import Container from '@components/Container';
 
 import styles from './Header.module.scss';
@@ -11,7 +9,7 @@ const Header = () => {
       <Container className={styles.headerContainer}>
         <p className={styles.headerTitle}>
           <Link href="/">
-            Hong Kong Car ToolS
+            Hong Kong Car Tools
           </Link>
         </p>
       </Container>
