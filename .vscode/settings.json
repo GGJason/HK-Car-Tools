@@ -1,0 +1,8 @@
+{
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/308fc29c-7f99-490f-ba99-5a0f59fadfdd/resourceGroups/Personal/providers/Microsoft.Web/sites/hkcartools",
+    "appService.deploySubpath": "."
+}

@@ -8,12 +8,49 @@ import Map from '@components/Map';
 import parkingLots1 from '/public/data/parkinglots/parkinglots1.json';
 
 import styles from '@styles/Home.module.scss';
+import {
+  useEffect, useState,setState
+} from 'react';
+import axios from 'axios';
 
 
 export default function Home() {
 
-  let DEFAULT_CENTER = [22.3034464,114.1587892];
-   let parkingLots= parkingLots1.results;
+  let DEFAULT_CENTER = [22.3034464, 114.1587892];
+  let parkingLots = parkingLots1.results;
+  const [data,setData] = useState({});
+
+
+  useEffect(() => {
+    if(Object.keys(data).length == 0){
+      axios.get("https://api.data.gov.hk/v1/carpark-info-vacancy?data=vacancy&lang=zh_TW")
+      .then((response) => {
+        console.log(response.data)
+        var mapData = response.data.results.map(m => [m.park_Id, m]);
+        var processedData = Object.fromEntries(mapData);
+
+        console.log(processedData)
+        setData( processedData);
+
+      })
+    }
+    setTimeout(()=>{
+
+      axios.get("https://api.data.gov.hk/v1/carpark-info-vacancy?data=vacancy&lang=zh_TW")
+      .then((response) => {
+        console.log(response.data)
+        var mapData = response.data.results.map(m => [m.park_Id, m]);
+        var processedData = Object.fromEntries(mapData);
+
+        console.log(processedData)
+        setData( processedData);
+
+      })
+
+    },10000)
+  }, [data]);
+
+  
 
   return (
     <Layout>
@@ -35,12 +72,25 @@ export default function Home() {
                 />
 
 
-                  { parkingLots.map(ele=>
-                  <Marker position={[
+                  { parkingLots
+                  .filter(f=>f.opening_status=="OPEN")
+                  //.filter(f=>f.HGV?.space>0)
+                  //.filter(f=>f.LGV?.space>0)
+                  //.filter(f=>f.motorCycle?.space>0)
+                  .map(ele=>{
+                  let vacancy = data[ele.park_Id];
+                  return (<Marker position={[
                       ele.latitude,
                      ele.longitude]}>
-                      <Popup>{ele.park_Id},{ele.name}</Popup>
-                  </Marker>
+                      <Popup>
+                        <div>{ele.park_Id},{ele.name}</div>
+                        <div>私家車:{vacancy?.privateCar?vacancy.privateCar[0].vacancy:""}/{ele.privateCar?.space}</div>
+                        {ele.LGV?.space > 0 ?<div>LGV:{vacancy?.LGV?vacancy.LGV[0].vacancy:""}/{ele.LGV?.space}</div>:""}
+                        {ele.HGV?.space > 0 ?<div>HGV:{vacancy?.HGV?vacancy.HGV[0].vacancy:""}/{ele.HGV?.space}</div>:""}
+                        {ele.motorCycle?.space > 0 ?(<div>電單車:{vacancy?.motorCycle?vacancy.motorCycle[0].vacancy:""}/{ele.motorCycle?.space }</div>):""}
+                        
+                      </Popup>
+                  </Marker>)}
                   )
                   }
               </>
