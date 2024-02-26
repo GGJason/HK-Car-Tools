@@ -4,6 +4,7 @@ import Layout from '@components/Layout';
 import Section from '@components/Section';
 import Container from '@components/Container';
 import Map from '@components/Map';
+import { clarity } from 'react-microsoft-clarity';
 
 import parkingLots1 from '/public/data/parkinglots/parkinglots1.json';
 
@@ -22,6 +23,8 @@ export default function Home() {
 
 
   useEffect(() => {
+
+    clarity.init("l7qjbmali9");
     if(Object.keys(data).length == 0){
       axios.get("https://api.data.gov.hk/v1/carpark-info-vacancy?data=vacancy&lang=zh_TW")
       .then((response) => {
