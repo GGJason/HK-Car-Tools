@@ -8,7 +8,8 @@
     "dev": "next dev",
     "build": "next build",
     "export": "next export",
-    "start": "next start"
+    "start": "next start",
+    "startAzure": "./node_modules/next/dist/bin/next start"
   },
   "repository": {
     "type": "git",
