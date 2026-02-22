@@ -4,16 +4,10 @@ const DynamicMap = dynamic(() => import('./DynamicMap'), {
   ssr: false
 });
 
-// Set default sizing to control aspect ratio which will scale responsively
-// but also help avoid layout shift
-
-const DEFAULT_WIDTH = 600;
-const DEFAULT_HEIGHT = 600;
-
+// Wrapper fills container so map can fit available white space
 const Map = (props) => {
-  const { width = DEFAULT_WIDTH, height = DEFAULT_HEIGHT } = props;
   return (
-    <div style={{ aspectRatio: width / height }}>
+    <div style={{ width: '100%', height: '100%', minHeight: '400px', flex: 1 }}>
       <DynamicMap {...props} />
     </div>
   )

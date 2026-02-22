@@ -1,0 +1,26 @@
+---
+description: Hong Kong Car Tools – project conventions, path aliases, and patterns
+alwaysApply: true
+---
+
+# Hong Kong Car Tools – Project Conventions
+
+## Stack
+- **Next.js 14** (Pages Router), **React 18**, **Leaflet** / **react-leaflet**, **SASS** (SCSS modules), **axios**.
+- Pages live in `src/pages/`; global styles in `src/styles/` (e.g. `globals.scss`).
+
+## Path aliases (use these, not relative paths for app code)
+- `@components/*` → `src/components/*` (e.g. `import Layout from '@components/Layout'`).
+- `@styles/*` → `src/styles/*` (e.g. `import '@styles/globals.scss'` or `import styles from '@styles/Home.module.scss'`).
+
+## Components
+- One component per folder: `src/components/ComponentName/ComponentName.js`.
+- Colocate styles: `ComponentName.module.scss` in the same folder; import as `import styles from './ComponentName.module.scss'`.
+- Use functional components. For optional extra `className`, merge with the base class (e.g. `let cn = styles.base; if (className) cn = cn + ' ' + className`) and spread `...rest` where appropriate.
+
+## Map (Leaflet)
+- Map UI lives in `src/components/Map/`. The main Map component uses a **render-prop**: it receives `children` as a function `(ReactLeaflet, Leaflet) => ...`. When suggesting Map usage, keep this pattern (e.g. pass `TileLayer`, `Marker`, `Popup` from `ReactLeaflet` inside that function).
+
+
+## When suggesting changes
+- Prefer the path aliases above. Preserve existing SCSS module naming and the Map render-prop pattern. Follow the existing Layout → Section → Container structure where relevant.
