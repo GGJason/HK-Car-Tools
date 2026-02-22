@@ -16,8 +16,8 @@ Modified from https://github.com/colbyfayock/next-leaflet-starter;
 First, run the development server:
 
 ```bash
-nvm install 20
-nvm use 20
+nvm install 22
+nvm use 22
 npm run dev
 ```
 
